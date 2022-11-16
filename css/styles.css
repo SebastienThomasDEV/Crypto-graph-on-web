@@ -5,7 +5,7 @@
 }
 
 body {
-    background-color: rgb(140, 140, 140);
+    background-color: rgb(237, 237, 237);
 }
 
 
@@ -64,7 +64,6 @@ body {
 }
 
 .add_crypto {
-    background-color: rgb(237, 237, 237);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -92,4 +91,29 @@ body {
     font-size: 1.5vw;
     font-weight: 500;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+#coins {
+    margin-bottom: 30px;
+    background-color: rgb(145, 253, 206);
+    border-radius: 15px;
+    width: fit-content;
+    padding: 1em;
+    border: none;
+    cursor: pointer;
+}
+
+#coins:focus {
+    border: 2px solid rgb(42, 118, 75);
+}
+
+#list_wpr {
+    height: 275px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+}
+
+.graph {
+    margin-bottom: 100px;
 }
