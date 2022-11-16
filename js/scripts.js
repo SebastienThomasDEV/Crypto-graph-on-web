@@ -79,21 +79,24 @@ function slider_coin(list) {
     search_cryptos.setAttribute('placeholder',`search`);
     $(list_wpr).append(search_cryptos);
 
-    let userList = new List('cryptos_list', values);
     const list_coin = document.createElement("ul");
+    list_coin.classList.add("list")
     list_coin.setAttribute('id',`cryptos_wpr`);
-
+    let items_list = []
     list.forEach(element => {
         let coin_wpr = document.createElement("li");
-        let coin = document.createElement("button");
-        $(coin_wpr).append(coin); 
-        coin.setAttribute('id',`coins`);
-        let text = document.createTextNode(`${element.currency}-${element.abbreviation}`);
-        coin.appendChild(text);
+        let currency = document.createElement("span");
+        let abbreviation = document.createElement("span");
+        currency.classList.add("currency") 
+        abbreviation.classList.add("abbreviation") 
+        $(coin_wpr).append(currency);
+        $(coin_wpr).append(abbreviation);
         $(list_coin).append(coin_wpr);
-        $(list_wpr).append(coin_wpr);
     });
+    $(list_wpr).append(list_coin);
     console.log(list_wpr)
+
+    let userList = new List('list_wpr', values);
     swal({
         title: "Choisi un crypto",
         content: list_wpr,
