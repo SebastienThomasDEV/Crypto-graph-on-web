@@ -66,42 +66,78 @@ function config_graph(choice) {
 }
 
 
-function slider_coin(list) {
-    // /////////////////////////////
+function slider_coin(crypto) {
 
-    let values = list
-    // /////////////////////////////
-    let list_wpr = document.createElement("div");
-    list_wpr.classList.add("list_wpr")
+    let wrapper = document.createElement("div")
+    wrapper.classList.add("wrapper")
 
-    let search_cryptos = document.createElement("input")
-    search_cryptos.classList.add("search")
-    search_cryptos.setAttribute('placeholder',`search`);
-    $(list_wpr).append(search_cryptos);
+    let search_input = document.createElement("input")
+    search_input.classList.add("search")
+    search_input.setAttribute('placeholder',`search`);
 
-    const list_coin = document.createElement("ul");
-    list_coin.classList.add("list")
-    list_coin.setAttribute('id',`cryptos_wpr`);
-    let items_list = []
-    list.forEach(element => {
-        let coin_wpr = document.createElement("li");
-        let currency = document.createElement("span");
-        let abbreviation = document.createElement("span");
-        currency.classList.add("currency") 
-        abbreviation.classList.add("abbreviation") 
-        $(coin_wpr).append(currency);
-        $(coin_wpr).append(abbreviation);
-        $(list_coin).append(coin_wpr);
+
+    let li_list = document.createElement("ul");
+    li_list.classList.add("list")
+
+    crypto.forEach(element => {
+        let li = document.createElement("li")
+        li.setAttribute('id',`crypto`);
+        // btn.classList.add("crypto")
+        li.innerHTML += `${element.currency} - ${element.abbreviation}`
+        $(li_list).append(li);
     });
-    $(list_wpr).append(list_coin);
-    console.log(list_wpr)
 
-    let userList = new List('list_wpr', values);
+    $(wrapper).append(li_list);
+    $(wrapper).append(search_input);
+    
+
+
     swal({
         title: "Choisi un crypto",
-        content: list_wpr,
+        content: wrapper,
       });
+
+    let all = document.querySelectorAll("#crypto")
+    search_input.addEventListener('input', ()  => {
+        let checkcase = search_input.value.toUpperCase();
+        console.log(checkcase)
+
+        for (let i = 0; i < all.length; i++) {
+            let txt_coin = all[i].innerText;
+            if (txt_coin.toUpperCase().indexOf(checkcase) > -1) {
+                all[i].style.display = "";
+            } else {
+                all[i].style.display = "none";
+            }
+        }
+    });
+    let test = ListenToList(all)
+    console.log(test)
+    
 }
+
+// function ListenToList(nodelist) {
+//     for (let i = 0; i < nodelist.length; i++) {
+//         nodelist[i].addEventListener('click', ()=> {
+//             choice = nodelist[i]
+//             console.log(choice)
+//             $(".list").hide();
+//             $(".search").hide();
+//             choice = Chosen(choice.innerHTML)
+//             // $(wrapper).append(choice);
+            
+//         });
+//     }
+// }
+
+// function Chosen(user_choice) {
+//     let choose = document.createElement("div")
+//     choose.classList.add("choose")
+//     choose.innerHTML += user_choice
+// }
+
+
+
 
 
 
@@ -144,5 +180,33 @@ close_btn.addEventListener('click', () => {
 
 
 
+// let values = crypto;
+//     let options = {
+//         valueNames: [ 'currency', 'abbreviation' ],
+//         item: '<li><p class="currency"></p><p class="abbreviation"></p></li>'
+//     };
+
+//     // créer un element qui engloble la liste
+//     let list_wpr = document.createElement("div");
+//     list_wpr.classList.add("list_wpr")
+
+    // créer un element seach qui est un input
+
+
+    // créer la liste
+    // let li_list = document.createElement("ul");
+    // li_list.classList.add("list")
+    // $(list_wpr).append(li_list);
+
+//     let CList = new List('list_wpr', options, values);
+
+//     crypto.forEach(element => {
+//         for (let i = 0; i < element.length; i++) {
+//             console.log(element)
+//             CList.add({
+//                 currency: element[i]
+//               });
+//         }
+//     });
 
 

@@ -93,8 +93,33 @@ body {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
+.wrapper {
+    height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
 
+#crypto {
+    background-color: darkslategrey;
+    color: aliceblue;
+    width: fit-content;
+    margin-block: 5px;
+    padding: 5px;
+    border-radius: 15px;
+    cursor: pointer;
+}
 
+#crypto:hover {
+    background-color: brown;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+}
 
 
 .graph {
