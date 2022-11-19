@@ -78,63 +78,70 @@ function slider_coin(crypto) {
 
     let li_list = document.createElement("ul");
     li_list.classList.add("list")
-
+    let nodes = []
     crypto.forEach(element => {
         let li = document.createElement("li")
         li.setAttribute('id',`crypto`);
         // btn.classList.add("crypto")
         li.innerHTML += `${element.currency} - ${element.abbreviation}`
+        nodes.push(li)
         $(li_list).append(li);
     });
 
+    console.log(nodes)
     $(wrapper).append(li_list);
     $(wrapper).append(search_input);
-    
+
+    search_input.addEventListener('input', ()  => {
+        let checkcase = search_input.value.toUpperCase();
+        console.log(checkcase)
+
+        for (let i = 0; i < nodes.length; i++) {
+            let txt_coin = nodes[i].innerText;
+            if (txt_coin.toUpperCase().indexOf(checkcase) > -1) {
+                nodes[i].style.display = "";
+            } else {
+                nodes[i].style.display = "none";
+            }
+        }
+    });
 
 
     swal({
         title: "Choisi un crypto",
         content: wrapper,
-      });
+    })
+    let choice = ListenToList(nodes)
+    console.log(choice)
 
-    let all = document.querySelectorAll("#crypto")
-    search_input.addEventListener('input', ()  => {
-        let checkcase = search_input.value.toUpperCase();
-        console.log(checkcase)
 
-        for (let i = 0; i < all.length; i++) {
-            let txt_coin = all[i].innerText;
-            if (txt_coin.toUpperCase().indexOf(checkcase) > -1) {
-                all[i].style.display = "";
-            } else {
-                all[i].style.display = "none";
-            }
-        }
-    });
-    let test = ListenToList(all)
-    console.log(test)
+    // .then(function(){
+    //     alert(choice);
+    // })
     
 }
 
-// function ListenToList(nodelist) {
-//     for (let i = 0; i < nodelist.length; i++) {
-//         nodelist[i].addEventListener('click', ()=> {
-//             choice = nodelist[i]
-//             console.log(choice)
-//             $(".list").hide();
-//             $(".search").hide();
-//             choice = Chosen(choice.innerHTML)
-//             // $(wrapper).append(choice);
-            
-//         });
-//     }
-// }
 
-// function Chosen(user_choice) {
-//     let choose = document.createElement("div")
-//     choose.classList.add("choose")
-//     choose.innerHTML += user_choice
-// }
+
+async function ListenToList(nodelist) {
+    let choice;
+    for (let i = 0; i < nodelist.length; i++) {
+        nodelist[i].addEventListener('click', ()=> {
+            choice = nodelist[i].innerHTML
+            $(".wrapper").hide();
+            $(".swal-content").append(choice);
+            $(".swal-title").empty();
+            $(".swal-title").append("Vous avez choisi");
+            return choice        
+        });
+    }
+}
+
+function Chosen(user_choice) {
+    let choose = document.createElement("div")
+    choose.classList.add("choose")
+    choose.innerHTML += user_choice
+}
 
 
 
