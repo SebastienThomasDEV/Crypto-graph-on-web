@@ -1,7 +1,9 @@
 import {crypto_list} from './crypto_list.js';
 
 async function getData(choice) {
+    // Retrieve data from the api
     // let url = await fetch(`https://min-api.cryptocompare.com/data/price?fsym=${choice}&tsyms=EUR;`);
+    
     let response1 = await fetch('https://min-api.cryptocompare.com/data/price?fsym=KCS&tsyms=EUR')
     let data_graph = [response1.json()]
     return data_graph
@@ -13,19 +15,28 @@ async function addData(chart) {
         let fresh = await new_data[i]
         chart.data.datasets[i].data.push(fresh["EUR"])
     }
+    // initialise la date sur le graph
     let date = new Date;
+    // ajoute la date sur le graph
     chart.data.labels.push(`${date.getHours()}h${date.getMinutes()}`)
+    // actualiser le graph pour afficher toutes les donnès
     chart.update();
 }
 
-function alea(min, max) { // min and max included 
+// fonction qui permet de renvoyer un nombre aléatoire dans une range
+function alea(min, max) { 
     return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
+// fonction qui permet de créer le graph
 function build_graph(nb_graph) {
-    const graph = document.createElement("canvas"); //créer un element HTML => canvas
-    graph.setAttribute('id',`Chart${nb_graph}`); //donne un id à l'element HTML => id incrémentable
+    // créer un élément html canva pour initialiser le graph
+    const graph = document.createElement("canvas");
+    // donne à l'element html créer un id incrementable pour pouvoir créer plusieurs graphs
+    graph.setAttribute('id',`Chart${nb_graph}`);
+    // ajoute la class graph au canva 
     graph.classList.add("graph")
+
     const choice = "KCS"
     const config = config_graph(choice)
     const builded = new Chart(graph,config);
@@ -70,19 +81,15 @@ function slider_coin(crypto) {
 
     let wrapper = document.createElement("div")
     wrapper.classList.add("wrapper")
-
     let search_input = document.createElement("input")
     search_input.classList.add("search")
     search_input.setAttribute('placeholder',`search`);
-
-
     let li_list = document.createElement("ul");
     li_list.classList.add("list")
     let nodes = []
     crypto.forEach(element => {
         let li = document.createElement("li")
         li.setAttribute('id',`crypto`);
-        // btn.classList.add("crypto")
         li.innerHTML += `${element.currency} - ${element.abbreviation}`
         nodes.push(li)
         $(li_list).append(li);
@@ -105,20 +112,8 @@ function slider_coin(crypto) {
             }
         }
     });
-
-
-    swal({
-        title: "Choisi un crypto",
-        content: wrapper,
-    })
     let choice = ListenToList(nodes)
     console.log(choice)
-
-
-    // .then(function(){
-    //     alert(choice);
-    // })
-    
 }
 
 
@@ -128,19 +123,9 @@ async function ListenToList(nodelist) {
     for (let i = 0; i < nodelist.length; i++) {
         nodelist[i].addEventListener('click', ()=> {
             choice = nodelist[i].innerHTML
-            $(".wrapper").hide();
-            $(".swal-content").append(choice);
-            $(".swal-title").empty();
-            $(".swal-title").append("Vous avez choisi");
             return choice        
         });
     }
-}
-
-function Chosen(user_choice) {
-    let choose = document.createElement("div")
-    choose.classList.add("choose")
-    choose.innerHTML += user_choice
 }
 
 
